@@ -337,9 +337,11 @@ func (x *ResourceLimits) GetMemoryLimitMb() int32 {
 // Represents a single test case with input and expected output.
 type TestCase struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Input          string                 `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`                                         // The input data to be piped into the program's stdin.
-	ExpectedOutput string                 `protobuf:"bytes,2,opt,name=expected_output,json=expectedOutput,proto3" json:"expected_output,omitempty"` // The exact expected output from the program's stdout.
-	IsHidden       bool                   `protobuf:"varint,3,opt,name=is_hidden,json=isHidden,proto3" json:"is_hidden,omitempty"`                  // If true, the input/output is not shown to the user on failure.
+	Id             int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	ProblemId      string                 `protobuf:"bytes,2,opt,name=problem_id,json=problemId,proto3" json:"problem_id,omitempty"`
+	Input          string                 `protobuf:"bytes,3,opt,name=input,proto3" json:"input,omitempty"`                                         // The input data to be piped into the program's stdin.
+	ExpectedOutput string                 `protobuf:"bytes,4,opt,name=expected_output,json=expectedOutput,proto3" json:"expected_output,omitempty"` // The exact expected output from the program's stdout.
+	IsHidden       bool                   `protobuf:"varint,5,opt,name=is_hidden,json=isHidden,proto3" json:"is_hidden,omitempty"`                  // If true, the input/output is not shown to the user on failure.
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -372,6 +374,20 @@ func (x *TestCase) ProtoReflect() protoreflect.Message {
 // Deprecated: Use TestCase.ProtoReflect.Descriptor instead.
 func (*TestCase) Descriptor() ([]byte, []int) {
 	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TestCase) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *TestCase) GetProblemId() string {
+	if x != nil {
+		return x.ProblemId
+	}
+	return ""
 }
 
 func (x *TestCase) GetInput() string {
@@ -994,11 +1010,14 @@ const file_judge_service_protos_judge_service_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\\\n" +
 	"\x0eResourceLimits\x12\"\n" +
 	"\rtime_limit_ms\x18\x01 \x01(\x05R\vtimeLimitMs\x12&\n" +
-	"\x0fmemory_limit_mb\x18\x02 \x01(\x05R\rmemoryLimitMb\"f\n" +
-	"\bTestCase\x12\x14\n" +
-	"\x05input\x18\x01 \x01(\tR\x05input\x12'\n" +
-	"\x0fexpected_output\x18\x02 \x01(\tR\x0eexpectedOutput\x12\x1b\n" +
-	"\tis_hidden\x18\x03 \x01(\bR\bisHidden\"\xee\x02\n" +
+	"\x0fmemory_limit_mb\x18\x02 \x01(\x05R\rmemoryLimitMb\"\x95\x01\n" +
+	"\bTestCase\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x1d\n" +
+	"\n" +
+	"problem_id\x18\x02 \x01(\tR\tproblemId\x12\x14\n" +
+	"\x05input\x18\x03 \x01(\tR\x05input\x12'\n" +
+	"\x0fexpected_output\x18\x04 \x01(\tR\x0eexpectedOutput\x12\x1b\n" +
+	"\tis_hidden\x18\x05 \x01(\bR\bisHidden\"\xee\x02\n" +
 	"\x14CreateProblemRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12i\n" +
