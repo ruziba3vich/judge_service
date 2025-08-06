@@ -74,6 +74,107 @@ func (Language) EnumDescriptor() ([]byte, []int) {
 	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{0}
 }
 
+type Difficulty int32
+
+const (
+	Difficulty_NOT_PROVIDED Difficulty = 0
+	Difficulty_HARD         Difficulty = 1
+	Difficulty_MEDIUM       Difficulty = 2
+	Difficulty_EASY         Difficulty = 3
+)
+
+// Enum value maps for Difficulty.
+var (
+	Difficulty_name = map[int32]string{
+		0: "NOT_PROVIDED",
+		1: "HARD",
+		2: "MEDIUM",
+		3: "EASY",
+	}
+	Difficulty_value = map[string]int32{
+		"NOT_PROVIDED": 0,
+		"HARD":         1,
+		"MEDIUM":       2,
+		"EASY":         3,
+	}
+)
+
+func (x Difficulty) Enum() *Difficulty {
+	p := new(Difficulty)
+	*p = x
+	return p
+}
+
+func (x Difficulty) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Difficulty) Descriptor() protoreflect.EnumDescriptor {
+	return file_judge_service_protos_judge_service_proto_enumTypes[1].Descriptor()
+}
+
+func (Difficulty) Type() protoreflect.EnumType {
+	return &file_judge_service_protos_judge_service_proto_enumTypes[1]
+}
+
+func (x Difficulty) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Difficulty.Descriptor instead.
+func (Difficulty) EnumDescriptor() ([]byte, []int) {
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{1}
+}
+
+type SolvedFilter int32
+
+const (
+	SolvedFilter_UNSPECIFIED   SolvedFilter = 0
+	SolvedFilter_ONLY_SOLVED   SolvedFilter = 1
+	SolvedFilter_ONLY_UNSOLVED SolvedFilter = 2
+)
+
+// Enum value maps for SolvedFilter.
+var (
+	SolvedFilter_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "ONLY_SOLVED",
+		2: "ONLY_UNSOLVED",
+	}
+	SolvedFilter_value = map[string]int32{
+		"UNSPECIFIED":   0,
+		"ONLY_SOLVED":   1,
+		"ONLY_UNSOLVED": 2,
+	}
+)
+
+func (x SolvedFilter) Enum() *SolvedFilter {
+	p := new(SolvedFilter)
+	*p = x
+	return p
+}
+
+func (x SolvedFilter) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SolvedFilter) Descriptor() protoreflect.EnumDescriptor {
+	return file_judge_service_protos_judge_service_proto_enumTypes[2].Descriptor()
+}
+
+func (SolvedFilter) Type() protoreflect.EnumType {
+	return &file_judge_service_protos_judge_service_proto_enumTypes[2]
+}
+
+func (x SolvedFilter) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SolvedFilter.Descriptor instead.
+func (SolvedFilter) EnumDescriptor() ([]byte, []int) {
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{2}
+}
+
 // An enumeration for all possible test case/submission statuses.
 type VerdictStatus int32
 
@@ -123,11 +224,11 @@ func (x VerdictStatus) String() string {
 }
 
 func (VerdictStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_judge_service_protos_judge_service_proto_enumTypes[1].Descriptor()
+	return file_judge_service_protos_judge_service_proto_enumTypes[3].Descriptor()
 }
 
 func (VerdictStatus) Type() protoreflect.EnumType {
-	return &file_judge_service_protos_judge_service_proto_enumTypes[1]
+	return &file_judge_service_protos_judge_service_proto_enumTypes[3]
 }
 
 func (x VerdictStatus) Number() protoreflect.EnumNumber {
@@ -136,7 +237,7 @@ func (x VerdictStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VerdictStatus.Descriptor instead.
 func (VerdictStatus) EnumDescriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{1}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{3}
 }
 
 type CompilationUpdate_Status int32
@@ -178,11 +279,11 @@ func (x CompilationUpdate_Status) String() string {
 }
 
 func (CompilationUpdate_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_judge_service_protos_judge_service_proto_enumTypes[2].Descriptor()
+	return file_judge_service_protos_judge_service_proto_enumTypes[4].Descriptor()
 }
 
 func (CompilationUpdate_Status) Type() protoreflect.EnumType {
-	return &file_judge_service_protos_judge_service_proto_enumTypes[2]
+	return &file_judge_service_protos_judge_service_proto_enumTypes[4]
 }
 
 func (x CompilationUpdate_Status) Number() protoreflect.EnumNumber {
@@ -191,7 +292,7 @@ func (x CompilationUpdate_Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CompilationUpdate_Status.Descriptor instead.
 func (CompilationUpdate_Status) EnumDescriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{10, 0}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{12, 0}
 }
 
 // A Problem contains the description, limits, and everything needed to judge a solution.
@@ -655,6 +756,126 @@ func (*DeleteProblemResponse) Descriptor() ([]byte, []int) {
 	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{7}
 }
 
+type GetProblemsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	Difficulty    Difficulty             `protobuf:"varint,3,opt,name=difficulty,proto3,enum=judge_service.Difficulty" json:"difficulty,omitempty"`
+	SolvedFilter  SolvedFilter           `protobuf:"varint,4,opt,name=solved_filter,json=solvedFilter,proto3,enum=judge_service.SolvedFilter" json:"solved_filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetProblemsRequest) Reset() {
+	*x = GetProblemsRequest{}
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetProblemsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProblemsRequest) ProtoMessage() {}
+
+func (x *GetProblemsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProblemsRequest.ProtoReflect.Descriptor instead.
+func (*GetProblemsRequest) Descriptor() ([]byte, []int) {
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetProblemsRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetProblemsRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *GetProblemsRequest) GetDifficulty() Difficulty {
+	if x != nil {
+		return x.Difficulty
+	}
+	return Difficulty_NOT_PROVIDED
+}
+
+func (x *GetProblemsRequest) GetSolvedFilter() SolvedFilter {
+	if x != nil {
+		return x.SolvedFilter
+	}
+	return SolvedFilter_UNSPECIFIED
+}
+
+type GetProblemsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Problems      []*Problem             `protobuf:"bytes,1,rep,name=problems,proto3" json:"problems,omitempty"`
+	TotalCount    int32                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetProblemsResponse) Reset() {
+	*x = GetProblemsResponse{}
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetProblemsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetProblemsResponse) ProtoMessage() {}
+
+func (x *GetProblemsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetProblemsResponse.ProtoReflect.Descriptor instead.
+func (*GetProblemsResponse) Descriptor() ([]byte, []int) {
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetProblemsResponse) GetProblems() []*Problem {
+	if x != nil {
+		return x.Problems
+	}
+	return nil
+}
+
+func (x *GetProblemsResponse) GetTotalCount() int32 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
 // The request to judge a piece of code.
 type SubmissionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -667,7 +888,7 @@ type SubmissionRequest struct {
 
 func (x *SubmissionRequest) Reset() {
 	*x = SubmissionRequest{}
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[8]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -679,7 +900,7 @@ func (x *SubmissionRequest) String() string {
 func (*SubmissionRequest) ProtoMessage() {}
 
 func (x *SubmissionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[8]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -692,7 +913,7 @@ func (x *SubmissionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmissionRequest.ProtoReflect.Descriptor instead.
 func (*SubmissionRequest) Descriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{8}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SubmissionRequest) GetProblemId() string {
@@ -730,7 +951,7 @@ type JudgeStreamResponse struct {
 
 func (x *JudgeStreamResponse) Reset() {
 	*x = JudgeStreamResponse{}
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[9]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -742,7 +963,7 @@ func (x *JudgeStreamResponse) String() string {
 func (*JudgeStreamResponse) ProtoMessage() {}
 
 func (x *JudgeStreamResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[9]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -755,7 +976,7 @@ func (x *JudgeStreamResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeStreamResponse.ProtoReflect.Descriptor instead.
 func (*JudgeStreamResponse) Descriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{9}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *JudgeStreamResponse) GetEvent() isJudgeStreamResponse_Event {
@@ -828,7 +1049,7 @@ type CompilationUpdate struct {
 
 func (x *CompilationUpdate) Reset() {
 	*x = CompilationUpdate{}
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[10]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -840,7 +1061,7 @@ func (x *CompilationUpdate) String() string {
 func (*CompilationUpdate) ProtoMessage() {}
 
 func (x *CompilationUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[10]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -853,7 +1074,7 @@ func (x *CompilationUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompilationUpdate.ProtoReflect.Descriptor instead.
 func (*CompilationUpdate) Descriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{10}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CompilationUpdate) GetStatus() CompilationUpdate_Status {
@@ -883,7 +1104,7 @@ type TestCaseUpdate struct {
 
 func (x *TestCaseUpdate) Reset() {
 	*x = TestCaseUpdate{}
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[11]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -895,7 +1116,7 @@ func (x *TestCaseUpdate) String() string {
 func (*TestCaseUpdate) ProtoMessage() {}
 
 func (x *TestCaseUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[11]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -908,7 +1129,7 @@ func (x *TestCaseUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestCaseUpdate.ProtoReflect.Descriptor instead.
 func (*TestCaseUpdate) Descriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{11}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *TestCaseUpdate) GetTestCaseNumber() int32 {
@@ -950,7 +1171,7 @@ type FinalVerdict struct {
 
 func (x *FinalVerdict) Reset() {
 	*x = FinalVerdict{}
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[12]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -962,7 +1183,7 @@ func (x *FinalVerdict) String() string {
 func (*FinalVerdict) ProtoMessage() {}
 
 func (x *FinalVerdict) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_service_protos_judge_service_proto_msgTypes[12]
+	mi := &file_judge_service_protos_judge_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -975,7 +1196,7 @@ func (x *FinalVerdict) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FinalVerdict.ProtoReflect.Descriptor instead.
 func (*FinalVerdict) Descriptor() ([]byte, []int) {
-	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{12}
+	return file_judge_service_protos_judge_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *FinalVerdict) GetStatus() VerdictStatus {
@@ -1034,7 +1255,18 @@ const file_judge_service_protos_judge_service_proto_rawDesc = "" +
 	"\aproblem\x18\x01 \x01(\v2\x16.judge_service.ProblemR\aproblem\"&\n" +
 	"\x14DeleteProblemRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"\x17\n" +
-	"\x15DeleteProblemResponse\"\x88\x01\n" +
+	"\x15DeleteProblemResponse\"\xbb\x01\n" +
+	"\x12GetProblemsRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\x129\n" +
+	"\n" +
+	"difficulty\x18\x03 \x01(\x0e2\x19.judge_service.DifficultyR\n" +
+	"difficulty\x12@\n" +
+	"\rsolved_filter\x18\x04 \x01(\x0e2\x1b.judge_service.SolvedFilterR\fsolvedFilter\"j\n" +
+	"\x13GetProblemsResponse\x122\n" +
+	"\bproblems\x18\x01 \x03(\v2\x16.judge_service.ProblemR\bproblems\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x05R\n" +
+	"totalCount\"\x88\x01\n" +
 	"\x11SubmissionRequest\x12\x1d\n" +
 	"\n" +
 	"problem_id\x18\x01 \x01(\tR\tproblemId\x12\x1f\n" +
@@ -1070,7 +1302,18 @@ const file_judge_service_protos_judge_service_proto_rawDesc = "" +
 	"\x06PYTHON\x10\x01\x12\a\n" +
 	"\x03CPP\x10\x02\x12\x0e\n" +
 	"\n" +
-	"JAVASCRIPT\x10\x03*\xba\x01\n" +
+	"JAVASCRIPT\x10\x03*>\n" +
+	"\n" +
+	"Difficulty\x12\x10\n" +
+	"\fNOT_PROVIDED\x10\x00\x12\b\n" +
+	"\x04HARD\x10\x01\x12\n" +
+	"\n" +
+	"\x06MEDIUM\x10\x02\x12\b\n" +
+	"\x04EASY\x10\x03*C\n" +
+	"\fSolvedFilter\x12\x0f\n" +
+	"\vUNSPECIFIED\x10\x00\x12\x0f\n" +
+	"\vONLY_SOLVED\x10\x01\x12\x11\n" +
+	"\rONLY_UNSOLVED\x10\x02*\xba\x01\n" +
 	"\rVerdictStatus\x12\x17\n" +
 	"\x13VERDICT_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bACCEPTED\x10\x01\x12\x10\n" +
@@ -1079,14 +1322,15 @@ const file_judge_service_protos_judge_service_proto_rawDesc = "" +
 	"\x15MEMORY_LIMIT_EXCEEDED\x10\x04\x12\x11\n" +
 	"\rRUNTIME_ERROR\x10\x05\x12\x15\n" +
 	"\x11COMPILATION_ERROR\x10\x06\x12\x12\n" +
-	"\x0eINTERNAL_ERROR\x10\a2\xa9\x03\n" +
+	"\x0eINTERNAL_ERROR\x10\a2\xff\x03\n" +
 	"\fJudgeService\x12L\n" +
 	"\rCreateProblem\x12#.judge_service.CreateProblemRequest\x1a\x16.judge_service.Problem\x12F\n" +
 	"\n" +
 	"GetProblem\x12 .judge_service.GetProblemRequest\x1a\x16.judge_service.Problem\x12L\n" +
 	"\rUpdateProblem\x12#.judge_service.UpdateProblemRequest\x1a\x16.judge_service.Problem\x12Z\n" +
 	"\rDeleteProblem\x12#.judge_service.DeleteProblemRequest\x1a$.judge_service.DeleteProblemResponse\x12Y\n" +
-	"\x0fJudgeSubmission\x12 .judge_service.SubmissionRequest\x1a\".judge_service.JudgeStreamResponse0\x01B\x10Z\x0e/judge_serviceb\x06proto3"
+	"\x0fJudgeSubmission\x12 .judge_service.SubmissionRequest\x1a\".judge_service.JudgeStreamResponse0\x01\x12T\n" +
+	"\vGetProblems\x12!.judge_service.GetProblemsRequest\x1a\".judge_service.GetProblemsResponseB\x10Z\x0e/judge_serviceb\x06proto3"
 
 var (
 	file_judge_service_protos_judge_service_proto_rawDescOnce sync.Once
@@ -1100,58 +1344,67 @@ func file_judge_service_protos_judge_service_proto_rawDescGZIP() []byte {
 	return file_judge_service_protos_judge_service_proto_rawDescData
 }
 
-var file_judge_service_protos_judge_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_judge_service_protos_judge_service_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_judge_service_protos_judge_service_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
+var file_judge_service_protos_judge_service_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_judge_service_protos_judge_service_proto_goTypes = []any{
 	(Language)(0),                 // 0: judge_service.Language
-	(VerdictStatus)(0),            // 1: judge_service.VerdictStatus
-	(CompilationUpdate_Status)(0), // 2: judge_service.CompilationUpdate.Status
-	(*Problem)(nil),               // 3: judge_service.Problem
-	(*ResourceLimits)(nil),        // 4: judge_service.ResourceLimits
-	(*TestCase)(nil),              // 5: judge_service.TestCase
-	(*CreateProblemRequest)(nil),  // 6: judge_service.CreateProblemRequest
-	(*GetProblemRequest)(nil),     // 7: judge_service.GetProblemRequest
-	(*UpdateProblemRequest)(nil),  // 8: judge_service.UpdateProblemRequest
-	(*DeleteProblemRequest)(nil),  // 9: judge_service.DeleteProblemRequest
-	(*DeleteProblemResponse)(nil), // 10: judge_service.DeleteProblemResponse
-	(*SubmissionRequest)(nil),     // 11: judge_service.SubmissionRequest
-	(*JudgeStreamResponse)(nil),   // 12: judge_service.JudgeStreamResponse
-	(*CompilationUpdate)(nil),     // 13: judge_service.CompilationUpdate
-	(*TestCaseUpdate)(nil),        // 14: judge_service.TestCaseUpdate
-	(*FinalVerdict)(nil),          // 15: judge_service.FinalVerdict
-	nil,                           // 16: judge_service.Problem.LanguageHarnessesEntry
-	nil,                           // 17: judge_service.CreateProblemRequest.LanguageHarnessesEntry
+	(Difficulty)(0),               // 1: judge_service.Difficulty
+	(SolvedFilter)(0),             // 2: judge_service.SolvedFilter
+	(VerdictStatus)(0),            // 3: judge_service.VerdictStatus
+	(CompilationUpdate_Status)(0), // 4: judge_service.CompilationUpdate.Status
+	(*Problem)(nil),               // 5: judge_service.Problem
+	(*ResourceLimits)(nil),        // 6: judge_service.ResourceLimits
+	(*TestCase)(nil),              // 7: judge_service.TestCase
+	(*CreateProblemRequest)(nil),  // 8: judge_service.CreateProblemRequest
+	(*GetProblemRequest)(nil),     // 9: judge_service.GetProblemRequest
+	(*UpdateProblemRequest)(nil),  // 10: judge_service.UpdateProblemRequest
+	(*DeleteProblemRequest)(nil),  // 11: judge_service.DeleteProblemRequest
+	(*DeleteProblemResponse)(nil), // 12: judge_service.DeleteProblemResponse
+	(*GetProblemsRequest)(nil),    // 13: judge_service.GetProblemsRequest
+	(*GetProblemsResponse)(nil),   // 14: judge_service.GetProblemsResponse
+	(*SubmissionRequest)(nil),     // 15: judge_service.SubmissionRequest
+	(*JudgeStreamResponse)(nil),   // 16: judge_service.JudgeStreamResponse
+	(*CompilationUpdate)(nil),     // 17: judge_service.CompilationUpdate
+	(*TestCaseUpdate)(nil),        // 18: judge_service.TestCaseUpdate
+	(*FinalVerdict)(nil),          // 19: judge_service.FinalVerdict
+	nil,                           // 20: judge_service.Problem.LanguageHarnessesEntry
+	nil,                           // 21: judge_service.CreateProblemRequest.LanguageHarnessesEntry
 }
 var file_judge_service_protos_judge_service_proto_depIdxs = []int32{
-	16, // 0: judge_service.Problem.language_harnesses:type_name -> judge_service.Problem.LanguageHarnessesEntry
-	4,  // 1: judge_service.Problem.limits:type_name -> judge_service.ResourceLimits
-	5,  // 2: judge_service.Problem.test_cases:type_name -> judge_service.TestCase
-	17, // 3: judge_service.CreateProblemRequest.language_harnesses:type_name -> judge_service.CreateProblemRequest.LanguageHarnessesEntry
-	4,  // 4: judge_service.CreateProblemRequest.limits:type_name -> judge_service.ResourceLimits
-	5,  // 5: judge_service.CreateProblemRequest.test_cases:type_name -> judge_service.TestCase
-	3,  // 6: judge_service.UpdateProblemRequest.problem:type_name -> judge_service.Problem
-	0,  // 7: judge_service.SubmissionRequest.language:type_name -> judge_service.Language
-	13, // 8: judge_service.JudgeStreamResponse.compilation_update:type_name -> judge_service.CompilationUpdate
-	14, // 9: judge_service.JudgeStreamResponse.test_case_update:type_name -> judge_service.TestCaseUpdate
-	15, // 10: judge_service.JudgeStreamResponse.final_verdict:type_name -> judge_service.FinalVerdict
-	2,  // 11: judge_service.CompilationUpdate.status:type_name -> judge_service.CompilationUpdate.Status
-	1,  // 12: judge_service.TestCaseUpdate.status:type_name -> judge_service.VerdictStatus
-	1,  // 13: judge_service.FinalVerdict.status:type_name -> judge_service.VerdictStatus
-	6,  // 14: judge_service.JudgeService.CreateProblem:input_type -> judge_service.CreateProblemRequest
-	7,  // 15: judge_service.JudgeService.GetProblem:input_type -> judge_service.GetProblemRequest
-	8,  // 16: judge_service.JudgeService.UpdateProblem:input_type -> judge_service.UpdateProblemRequest
-	9,  // 17: judge_service.JudgeService.DeleteProblem:input_type -> judge_service.DeleteProblemRequest
-	11, // 18: judge_service.JudgeService.JudgeSubmission:input_type -> judge_service.SubmissionRequest
-	3,  // 19: judge_service.JudgeService.CreateProblem:output_type -> judge_service.Problem
-	3,  // 20: judge_service.JudgeService.GetProblem:output_type -> judge_service.Problem
-	3,  // 21: judge_service.JudgeService.UpdateProblem:output_type -> judge_service.Problem
-	10, // 22: judge_service.JudgeService.DeleteProblem:output_type -> judge_service.DeleteProblemResponse
-	12, // 23: judge_service.JudgeService.JudgeSubmission:output_type -> judge_service.JudgeStreamResponse
-	19, // [19:24] is the sub-list for method output_type
-	14, // [14:19] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	20, // 0: judge_service.Problem.language_harnesses:type_name -> judge_service.Problem.LanguageHarnessesEntry
+	6,  // 1: judge_service.Problem.limits:type_name -> judge_service.ResourceLimits
+	7,  // 2: judge_service.Problem.test_cases:type_name -> judge_service.TestCase
+	21, // 3: judge_service.CreateProblemRequest.language_harnesses:type_name -> judge_service.CreateProblemRequest.LanguageHarnessesEntry
+	6,  // 4: judge_service.CreateProblemRequest.limits:type_name -> judge_service.ResourceLimits
+	7,  // 5: judge_service.CreateProblemRequest.test_cases:type_name -> judge_service.TestCase
+	5,  // 6: judge_service.UpdateProblemRequest.problem:type_name -> judge_service.Problem
+	1,  // 7: judge_service.GetProblemsRequest.difficulty:type_name -> judge_service.Difficulty
+	2,  // 8: judge_service.GetProblemsRequest.solved_filter:type_name -> judge_service.SolvedFilter
+	5,  // 9: judge_service.GetProblemsResponse.problems:type_name -> judge_service.Problem
+	0,  // 10: judge_service.SubmissionRequest.language:type_name -> judge_service.Language
+	17, // 11: judge_service.JudgeStreamResponse.compilation_update:type_name -> judge_service.CompilationUpdate
+	18, // 12: judge_service.JudgeStreamResponse.test_case_update:type_name -> judge_service.TestCaseUpdate
+	19, // 13: judge_service.JudgeStreamResponse.final_verdict:type_name -> judge_service.FinalVerdict
+	4,  // 14: judge_service.CompilationUpdate.status:type_name -> judge_service.CompilationUpdate.Status
+	3,  // 15: judge_service.TestCaseUpdate.status:type_name -> judge_service.VerdictStatus
+	3,  // 16: judge_service.FinalVerdict.status:type_name -> judge_service.VerdictStatus
+	8,  // 17: judge_service.JudgeService.CreateProblem:input_type -> judge_service.CreateProblemRequest
+	9,  // 18: judge_service.JudgeService.GetProblem:input_type -> judge_service.GetProblemRequest
+	10, // 19: judge_service.JudgeService.UpdateProblem:input_type -> judge_service.UpdateProblemRequest
+	11, // 20: judge_service.JudgeService.DeleteProblem:input_type -> judge_service.DeleteProblemRequest
+	15, // 21: judge_service.JudgeService.JudgeSubmission:input_type -> judge_service.SubmissionRequest
+	13, // 22: judge_service.JudgeService.GetProblems:input_type -> judge_service.GetProblemsRequest
+	5,  // 23: judge_service.JudgeService.CreateProblem:output_type -> judge_service.Problem
+	5,  // 24: judge_service.JudgeService.GetProblem:output_type -> judge_service.Problem
+	5,  // 25: judge_service.JudgeService.UpdateProblem:output_type -> judge_service.Problem
+	12, // 26: judge_service.JudgeService.DeleteProblem:output_type -> judge_service.DeleteProblemResponse
+	16, // 27: judge_service.JudgeService.JudgeSubmission:output_type -> judge_service.JudgeStreamResponse
+	14, // 28: judge_service.JudgeService.GetProblems:output_type -> judge_service.GetProblemsResponse
+	23, // [23:29] is the sub-list for method output_type
+	17, // [17:23] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_judge_service_protos_judge_service_proto_init() }
@@ -1159,7 +1412,7 @@ func file_judge_service_protos_judge_service_proto_init() {
 	if File_judge_service_protos_judge_service_proto != nil {
 		return
 	}
-	file_judge_service_protos_judge_service_proto_msgTypes[9].OneofWrappers = []any{
+	file_judge_service_protos_judge_service_proto_msgTypes[11].OneofWrappers = []any{
 		(*JudgeStreamResponse_CompilationUpdate)(nil),
 		(*JudgeStreamResponse_TestCaseUpdate)(nil),
 		(*JudgeStreamResponse_FinalVerdict)(nil),
@@ -1169,8 +1422,8 @@ func file_judge_service_protos_judge_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_judge_service_protos_judge_service_proto_rawDesc), len(file_judge_service_protos_judge_service_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   15,
+			NumEnums:      5,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

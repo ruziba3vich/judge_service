@@ -24,6 +24,7 @@ const (
 	JudgeService_UpdateProblem_FullMethodName   = "/judge_service.JudgeService/UpdateProblem"
 	JudgeService_DeleteProblem_FullMethodName   = "/judge_service.JudgeService/DeleteProblem"
 	JudgeService_JudgeSubmission_FullMethodName = "/judge_service.JudgeService/JudgeSubmission"
+	JudgeService_GetProblems_FullMethodName     = "/judge_service.JudgeService/GetProblems"
 )
 
 // JudgeServiceClient is the client API for JudgeService service.
@@ -37,6 +38,7 @@ type JudgeServiceClient interface {
 	UpdateProblem(ctx context.Context, in *UpdateProblemRequest, opts ...grpc.CallOption) (*Problem, error)
 	DeleteProblem(ctx context.Context, in *DeleteProblemRequest, opts ...grpc.CallOption) (*DeleteProblemResponse, error)
 	JudgeSubmission(ctx context.Context, in *SubmissionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[JudgeStreamResponse], error)
+	GetProblems(ctx context.Context, in *GetProblemsRequest, opts ...grpc.CallOption) (*GetProblemsResponse, error)
 }
 
 type judgeServiceClient struct {
@@ -106,6 +108,16 @@ func (c *judgeServiceClient) JudgeSubmission(ctx context.Context, in *Submission
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type JudgeService_JudgeSubmissionClient = grpc.ServerStreamingClient[JudgeStreamResponse]
 
+func (c *judgeServiceClient) GetProblems(ctx context.Context, in *GetProblemsRequest, opts ...grpc.CallOption) (*GetProblemsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetProblemsResponse)
+	err := c.cc.Invoke(ctx, JudgeService_GetProblems_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JudgeServiceServer is the server API for JudgeService service.
 // All implementations must embed UnimplementedJudgeServiceServer
 // for forward compatibility.
@@ -117,6 +129,7 @@ type JudgeServiceServer interface {
 	UpdateProblem(context.Context, *UpdateProblemRequest) (*Problem, error)
 	DeleteProblem(context.Context, *DeleteProblemRequest) (*DeleteProblemResponse, error)
 	JudgeSubmission(*SubmissionRequest, grpc.ServerStreamingServer[JudgeStreamResponse]) error
+	GetProblems(context.Context, *GetProblemsRequest) (*GetProblemsResponse, error)
 	mustEmbedUnimplementedJudgeServiceServer()
 }
 
@@ -141,6 +154,9 @@ func (UnimplementedJudgeServiceServer) DeleteProblem(context.Context, *DeletePro
 }
 func (UnimplementedJudgeServiceServer) JudgeSubmission(*SubmissionRequest, grpc.ServerStreamingServer[JudgeStreamResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method JudgeSubmission not implemented")
+}
+func (UnimplementedJudgeServiceServer) GetProblems(context.Context, *GetProblemsRequest) (*GetProblemsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProblems not implemented")
 }
 func (UnimplementedJudgeServiceServer) mustEmbedUnimplementedJudgeServiceServer() {}
 func (UnimplementedJudgeServiceServer) testEmbeddedByValue()                      {}
@@ -246,6 +262,24 @@ func _JudgeService_JudgeSubmission_Handler(srv interface{}, stream grpc.ServerSt
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type JudgeService_JudgeSubmissionServer = grpc.ServerStreamingServer[JudgeStreamResponse]
 
+func _JudgeService_GetProblems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProblemsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JudgeServiceServer).GetProblems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JudgeService_GetProblems_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JudgeServiceServer).GetProblems(ctx, req.(*GetProblemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // JudgeService_ServiceDesc is the grpc.ServiceDesc for JudgeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -268,6 +302,10 @@ var JudgeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProblem",
 			Handler:    _JudgeService_DeleteProblem_Handler,
+		},
+		{
+			MethodName: "GetProblems",
+			Handler:    _JudgeService_GetProblems_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
