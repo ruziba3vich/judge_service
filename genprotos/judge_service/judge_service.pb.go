@@ -306,6 +306,7 @@ type Problem struct {
 	LanguageHarnesses map[string]string `protobuf:"bytes,4,rep,name=language_harnesses,json=languageHarnesses,proto3" json:"language_harnesses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	Limits            *ResourceLimits   `protobuf:"bytes,5,opt,name=limits,proto3" json:"limits,omitempty"`                        // Time and memory limits for this problem.
 	TestCases         []*TestCase       `protobuf:"bytes,6,rep,name=test_cases,json=testCases,proto3" json:"test_cases,omitempty"` // List of test cases.
+	Difficulty        Difficulty        `protobuf:"varint,7,opt,name=difficulty,proto3,enum=judge_service.Difficulty" json:"difficulty,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -380,6 +381,13 @@ func (x *Problem) GetTestCases() []*TestCase {
 		return x.TestCases
 	}
 	return nil
+}
+
+func (x *Problem) GetDifficulty() Difficulty {
+	if x != nil {
+		return x.Difficulty
+	}
+	return Difficulty_NOT_PROVIDED
 }
 
 // Defines the resource constraints for a submission.
@@ -1217,7 +1225,7 @@ var File_judge_service_protos_judge_service_proto protoreflect.FileDescriptor
 
 const file_judge_service_protos_judge_service_proto_rawDesc = "" +
 	"\n" +
-	"(judge_service_protos/judge_service.proto\x12\rjudge_service\"\xe4\x02\n" +
+	"(judge_service_protos/judge_service.proto\x12\rjudge_service\"\x9f\x03\n" +
 	"\aProblem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
@@ -1225,7 +1233,10 @@ const file_judge_service_protos_judge_service_proto_rawDesc = "" +
 	"\x12language_harnesses\x18\x04 \x03(\v2-.judge_service.Problem.LanguageHarnessesEntryR\x11languageHarnesses\x125\n" +
 	"\x06limits\x18\x05 \x01(\v2\x1d.judge_service.ResourceLimitsR\x06limits\x126\n" +
 	"\n" +
-	"test_cases\x18\x06 \x03(\v2\x17.judge_service.TestCaseR\ttestCases\x1aD\n" +
+	"test_cases\x18\x06 \x03(\v2\x17.judge_service.TestCaseR\ttestCases\x129\n" +
+	"\n" +
+	"difficulty\x18\a \x01(\x0e2\x19.judge_service.DifficultyR\n" +
+	"difficulty\x1aD\n" +
 	"\x16LanguageHarnessesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\\\n" +
@@ -1374,37 +1385,38 @@ var file_judge_service_protos_judge_service_proto_depIdxs = []int32{
 	20, // 0: judge_service.Problem.language_harnesses:type_name -> judge_service.Problem.LanguageHarnessesEntry
 	6,  // 1: judge_service.Problem.limits:type_name -> judge_service.ResourceLimits
 	7,  // 2: judge_service.Problem.test_cases:type_name -> judge_service.TestCase
-	21, // 3: judge_service.CreateProblemRequest.language_harnesses:type_name -> judge_service.CreateProblemRequest.LanguageHarnessesEntry
-	6,  // 4: judge_service.CreateProblemRequest.limits:type_name -> judge_service.ResourceLimits
-	7,  // 5: judge_service.CreateProblemRequest.test_cases:type_name -> judge_service.TestCase
-	5,  // 6: judge_service.UpdateProblemRequest.problem:type_name -> judge_service.Problem
-	1,  // 7: judge_service.GetProblemsRequest.difficulty:type_name -> judge_service.Difficulty
-	2,  // 8: judge_service.GetProblemsRequest.solved_filter:type_name -> judge_service.SolvedFilter
-	5,  // 9: judge_service.GetProblemsResponse.problems:type_name -> judge_service.Problem
-	0,  // 10: judge_service.SubmissionRequest.language:type_name -> judge_service.Language
-	17, // 11: judge_service.JudgeStreamResponse.compilation_update:type_name -> judge_service.CompilationUpdate
-	18, // 12: judge_service.JudgeStreamResponse.test_case_update:type_name -> judge_service.TestCaseUpdate
-	19, // 13: judge_service.JudgeStreamResponse.final_verdict:type_name -> judge_service.FinalVerdict
-	4,  // 14: judge_service.CompilationUpdate.status:type_name -> judge_service.CompilationUpdate.Status
-	3,  // 15: judge_service.TestCaseUpdate.status:type_name -> judge_service.VerdictStatus
-	3,  // 16: judge_service.FinalVerdict.status:type_name -> judge_service.VerdictStatus
-	8,  // 17: judge_service.JudgeService.CreateProblem:input_type -> judge_service.CreateProblemRequest
-	9,  // 18: judge_service.JudgeService.GetProblem:input_type -> judge_service.GetProblemRequest
-	10, // 19: judge_service.JudgeService.UpdateProblem:input_type -> judge_service.UpdateProblemRequest
-	11, // 20: judge_service.JudgeService.DeleteProblem:input_type -> judge_service.DeleteProblemRequest
-	15, // 21: judge_service.JudgeService.JudgeSubmission:input_type -> judge_service.SubmissionRequest
-	13, // 22: judge_service.JudgeService.GetProblems:input_type -> judge_service.GetProblemsRequest
-	5,  // 23: judge_service.JudgeService.CreateProblem:output_type -> judge_service.Problem
-	5,  // 24: judge_service.JudgeService.GetProblem:output_type -> judge_service.Problem
-	5,  // 25: judge_service.JudgeService.UpdateProblem:output_type -> judge_service.Problem
-	12, // 26: judge_service.JudgeService.DeleteProblem:output_type -> judge_service.DeleteProblemResponse
-	16, // 27: judge_service.JudgeService.JudgeSubmission:output_type -> judge_service.JudgeStreamResponse
-	14, // 28: judge_service.JudgeService.GetProblems:output_type -> judge_service.GetProblemsResponse
-	23, // [23:29] is the sub-list for method output_type
-	17, // [17:23] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	1,  // 3: judge_service.Problem.difficulty:type_name -> judge_service.Difficulty
+	21, // 4: judge_service.CreateProblemRequest.language_harnesses:type_name -> judge_service.CreateProblemRequest.LanguageHarnessesEntry
+	6,  // 5: judge_service.CreateProblemRequest.limits:type_name -> judge_service.ResourceLimits
+	7,  // 6: judge_service.CreateProblemRequest.test_cases:type_name -> judge_service.TestCase
+	5,  // 7: judge_service.UpdateProblemRequest.problem:type_name -> judge_service.Problem
+	1,  // 8: judge_service.GetProblemsRequest.difficulty:type_name -> judge_service.Difficulty
+	2,  // 9: judge_service.GetProblemsRequest.solved_filter:type_name -> judge_service.SolvedFilter
+	5,  // 10: judge_service.GetProblemsResponse.problems:type_name -> judge_service.Problem
+	0,  // 11: judge_service.SubmissionRequest.language:type_name -> judge_service.Language
+	17, // 12: judge_service.JudgeStreamResponse.compilation_update:type_name -> judge_service.CompilationUpdate
+	18, // 13: judge_service.JudgeStreamResponse.test_case_update:type_name -> judge_service.TestCaseUpdate
+	19, // 14: judge_service.JudgeStreamResponse.final_verdict:type_name -> judge_service.FinalVerdict
+	4,  // 15: judge_service.CompilationUpdate.status:type_name -> judge_service.CompilationUpdate.Status
+	3,  // 16: judge_service.TestCaseUpdate.status:type_name -> judge_service.VerdictStatus
+	3,  // 17: judge_service.FinalVerdict.status:type_name -> judge_service.VerdictStatus
+	8,  // 18: judge_service.JudgeService.CreateProblem:input_type -> judge_service.CreateProblemRequest
+	9,  // 19: judge_service.JudgeService.GetProblem:input_type -> judge_service.GetProblemRequest
+	10, // 20: judge_service.JudgeService.UpdateProblem:input_type -> judge_service.UpdateProblemRequest
+	11, // 21: judge_service.JudgeService.DeleteProblem:input_type -> judge_service.DeleteProblemRequest
+	15, // 22: judge_service.JudgeService.JudgeSubmission:input_type -> judge_service.SubmissionRequest
+	13, // 23: judge_service.JudgeService.GetProblems:input_type -> judge_service.GetProblemsRequest
+	5,  // 24: judge_service.JudgeService.CreateProblem:output_type -> judge_service.Problem
+	5,  // 25: judge_service.JudgeService.GetProblem:output_type -> judge_service.Problem
+	5,  // 26: judge_service.JudgeService.UpdateProblem:output_type -> judge_service.Problem
+	12, // 27: judge_service.JudgeService.DeleteProblem:output_type -> judge_service.DeleteProblemResponse
+	16, // 28: judge_service.JudgeService.JudgeSubmission:output_type -> judge_service.JudgeStreamResponse
+	14, // 29: judge_service.JudgeService.GetProblems:output_type -> judge_service.GetProblemsResponse
+	24, // [24:30] is the sub-list for method output_type
+	18, // [18:24] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_judge_service_protos_judge_service_proto_init() }
