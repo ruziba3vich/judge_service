@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS problems (
     title TEXT NOT NULL,
     description TEXT NOT NULL,
     time_limit_ms INTEGER NOT NULL,
-    memory_limit_mb INTEGER NOT NULL
+    memory_limit_mb INTEGER NOT NULL,
+    difficulty VARCHAR(10) CHECK (difficulty IN ('easy', 'medium', 'hard'))
 );
 
 CREATE TABLE IF NOT EXISTS problem_language_harnesses (

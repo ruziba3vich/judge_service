@@ -2,9 +2,9 @@
 
 -- name: CreateProblem :exec
 INSERT INTO problems (
-    id, title, description, time_limit_ms, memory_limit_mb
+    id, title, description, time_limit_ms, memory_limit_mb, difficulty
 ) VALUES (
-    $1, $2, $3, $4, $5
+    $1, $2, $3, $4, $5, $6
 );
 
 -- name: CreateProblemLanguageHarness :exec
@@ -22,7 +22,7 @@ INSERT INTO test_cases (
 );
 
 -- name: GetProblem :one
-SELECT id, title, description, time_limit_ms, memory_limit_mb
+SELECT id, title, description, time_limit_ms, memory_limit_mb, difficulty
 FROM problems
 WHERE id = $1;
 
@@ -42,7 +42,8 @@ SET
     title = $2,
     description = $3,
     time_limit_ms = $4,
-    memory_limit_mb = $5
+    memory_limit_mb = $5,
+    difficulty = $6
 WHERE id = $1;
 
 -- name: DeleteProblemLanguageHarnessesByProblemID :exec
