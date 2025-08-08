@@ -213,11 +213,11 @@ func (q *Queries) GetTestCases(ctx context.Context, problemID string) ([]GetTest
 const updateProblem = `-- name: UpdateProblem :exec
 UPDATE problems
 SET
-    title = $2,
-    description = $3,
-    time_limit_ms = $4,
-    memory_limit_mb = $5,
-    difficulty = $6
+    title = COALESCE($2, title),
+    description = COALESCE($3, description),
+    time_limit_ms = COALESCE($4, time_limit_ms),
+    memory_limit_mb = COALESCE($5, memory_limit_mb),
+    difficulty = COALESCE($6, difficulty)
 WHERE id = $1
 `
 
