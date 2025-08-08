@@ -57,3 +57,15 @@ WHERE problem_id = $1;
 -- name: DeleteProblem :exec
 DELETE FROM problems
 WHERE id = $1;
+
+-- name: GetProblemsWithFilter :many
+SELECT 
+    id, 
+    title, 
+    description, 
+    difficulty
+FROM problems
+WHERE 
+    ($1::text IS NULL OR difficulty = $1)
+ORDER BY id
+LIMIT $2 OFFSET $3;

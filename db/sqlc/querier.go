@@ -18,6 +18,7 @@ type Querier interface {
 	DeleteTestCasesByProblemID(ctx context.Context, problemID string) error
 	GetProblem(ctx context.Context, id string) (Problem, error)
 	GetProblemLanguageHarnesses(ctx context.Context, problemID string) ([]GetProblemLanguageHarnessesRow, error)
+	GetProblemsWithFilter(ctx context.Context, arg GetProblemsWithFilterParams) ([]GetProblemsWithFilterRow, error)
 	GetTestCases(ctx context.Context, problemID string) ([]GetTestCasesRow, error)
 	UpdateProblem(ctx context.Context, arg UpdateProblemParams) error
 }

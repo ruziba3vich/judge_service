@@ -169,6 +169,60 @@ func (q *Queries) GetProblemLanguageHarnesses(ctx context.Context, problemID str
 	return items, nil
 }
 
+const getProblemsWithFilter = `-- name: GetProblemsWithFilter :many
+SELECT 
+    id, 
+    title, 
+    description, 
+    difficulty
+FROM problems
+WHERE 
+    ($1::text IS NULL OR difficulty = $1)
+ORDER BY id
+LIMIT $2 OFFSET $3
+`
+
+type GetProblemsWithFilterParams struct {
+	Column1 string `json:"column_1"`
+	Limit   int32  `json:"limit"`
+	Offset  int32  `json:"offset"`
+}
+
+type GetProblemsWithFilterRow struct {
+	ID          string         `json:"id"`
+	Title       string         `json:"title"`
+	Description string         `json:"description"`
+	Difficulty  sql.NullString `json:"difficulty"`
+}
+
+func (q *Queries) GetProblemsWithFilter(ctx context.Context, arg GetProblemsWithFilterParams) ([]GetProblemsWithFilterRow, error) {
+	rows, err := q.db.QueryContext(ctx, getProblemsWithFilter, arg.Column1, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetProblemsWithFilterRow{}
+	for rows.Next() {
+		var i GetProblemsWithFilterRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Description,
+			&i.Difficulty,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getTestCases = `-- name: GetTestCases :many
 SELECT id, input, expected_output, is_hidden
 FROM test_cases
