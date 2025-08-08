@@ -7,23 +7,25 @@ package sqlc
 
 import (
 	"context"
+	"database/sql"
 )
 
 const createProblem = `-- name: CreateProblem :exec
 
 INSERT INTO problems (
-    id, title, description, time_limit_ms, memory_limit_mb
+    id, title, description, time_limit_ms, memory_limit_mb, difficulty
 ) VALUES (
-    $1, $2, $3, $4, $5
+    $1, $2, $3, $4, $5, $6
 )
 `
 
 type CreateProblemParams struct {
-	ID            string `json:"id"`
-	Title         string `json:"title"`
-	Description   string `json:"description"`
-	TimeLimitMs   int32  `json:"time_limit_ms"`
-	MemoryLimitMb int32  `json:"memory_limit_mb"`
+	ID            string         `json:"id"`
+	Title         string         `json:"title"`
+	Description   string         `json:"description"`
+	TimeLimitMs   int32          `json:"time_limit_ms"`
+	MemoryLimitMb int32          `json:"memory_limit_mb"`
+	Difficulty    sql.NullString `json:"difficulty"`
 }
 
 // db/queries/problems.sql
@@ -34,6 +36,7 @@ func (q *Queries) CreateProblem(ctx context.Context, arg CreateProblemParams) er
 		arg.Description,
 		arg.TimeLimitMs,
 		arg.MemoryLimitMb,
+		arg.Difficulty,
 	)
 	return err
 }
@@ -113,7 +116,7 @@ func (q *Queries) DeleteTestCasesByProblemID(ctx context.Context, problemID stri
 }
 
 const getProblem = `-- name: GetProblem :one
-SELECT id, title, description, time_limit_ms, memory_limit_mb
+SELECT id, title, description, time_limit_ms, memory_limit_mb, difficulty
 FROM problems
 WHERE id = $1
 `
@@ -127,6 +130,7 @@ func (q *Queries) GetProblem(ctx context.Context, id string) (Problem, error) {
 		&i.Description,
 		&i.TimeLimitMs,
 		&i.MemoryLimitMb,
+		&i.Difficulty,
 	)
 	return i, err
 }
@@ -212,16 +216,18 @@ SET
     title = $2,
     description = $3,
     time_limit_ms = $4,
-    memory_limit_mb = $5
+    memory_limit_mb = $5,
+    difficulty = $6
 WHERE id = $1
 `
 
 type UpdateProblemParams struct {
-	ID            string `json:"id"`
-	Title         string `json:"title"`
-	Description   string `json:"description"`
-	TimeLimitMs   int32  `json:"time_limit_ms"`
-	MemoryLimitMb int32  `json:"memory_limit_mb"`
+	ID            string         `json:"id"`
+	Title         string         `json:"title"`
+	Description   string         `json:"description"`
+	TimeLimitMs   int32          `json:"time_limit_ms"`
+	MemoryLimitMb int32          `json:"memory_limit_mb"`
+	Difficulty    sql.NullString `json:"difficulty"`
 }
 
 func (q *Queries) UpdateProblem(ctx context.Context, arg UpdateProblemParams) error {
@@ -231,6 +237,7 @@ func (q *Queries) UpdateProblem(ctx context.Context, arg UpdateProblemParams) er
 		arg.Description,
 		arg.TimeLimitMs,
 		arg.MemoryLimitMb,
+		arg.Difficulty,
 	)
 	return err
 }

@@ -4,12 +4,17 @@
 
 package sqlc
 
+import (
+	"database/sql"
+)
+
 type Problem struct {
-	ID            string `json:"id"`
-	Title         string `json:"title"`
-	Description   string `json:"description"`
-	TimeLimitMs   int32  `json:"time_limit_ms"`
-	MemoryLimitMb int32  `json:"memory_limit_mb"`
+	ID            string         `json:"id"`
+	Title         string         `json:"title"`
+	Description   string         `json:"description"`
+	TimeLimitMs   int32          `json:"time_limit_ms"`
+	MemoryLimitMb int32          `json:"memory_limit_mb"`
+	Difficulty    sql.NullString `json:"difficulty"`
 }
 
 type ProblemLanguageHarness struct {
